@@ -4,17 +4,51 @@
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>JavaScript Quiz!</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="">
-    </head>
-    <body>
 
-        
-        <script src="index.js" async defer></script>
-    </body>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>JavaScript Quiz!</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="assets/styles.css">
+</head>
+
+<body>
+
+    <!-- Acceptance Criteria - MVP
+            GIVEN I am taking a code quiz
+            WHEN I click the start button
+            THEN a timer starts and I am presented with a question
+            WHEN I answer a question
+            THEN I am presented with another question
+            WHEN I answer a question incorrectly
+            THEN time is subtracted from the clock
+            WHEN all questions are answered or the timer reaches 0
+            THEN the game is over
+            WHEN the game is over
+            THEN I can save my initials and my score
+    -->
+
+    <header>
+        <p>HighScores</p>
+        <p>Time: </p>
+    </header>
+
+    <main>
+
+
+        <!-- I could have this entire section disappear when the button is clicked, so that I do not have to worry about altering the contents of it too much when I start the actual quiz -->
+        <section id="intro">
+            <h1 id="intro-header">Coding Quiz Challenge!</h1>
+            <p id="intro-description">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolores enim iure obcaecati cupiditate a soluta maiores ab voluptates repudiandae assumenda.</p>
+            <button id="start-button" class="btn">Start Quiz!</button>
+        </section>
+
+    </main>
+
+
+    <script src="index.js" async defer></script>
+</body>
+
 </html>
