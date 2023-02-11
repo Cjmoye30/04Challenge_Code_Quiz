@@ -1,0 +1,31 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    border: .1px solid;
+}
+
+/* Introduction Section */
+#intro{
+    display: block;
+    margin: 50px auto;
+    background-color: antiquewhite;
+    text-align: center;
+}
+
+#intro-header {
+    font-size: 48px;
+    padding: 25px 0;
+}
+
+#intro-description{
+    padding: 20px;
+}
+
+.btn {
+    background-color: purple;
+    color: whitesmoke;
+    padding: 10px;
+    border: .1px solid;
+    border-radius: 5px;    
+}
