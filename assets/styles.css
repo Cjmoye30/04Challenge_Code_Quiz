@@ -5,7 +5,7 @@
     border: .1px solid;
 }
 
-/* Introduction Section */
+/* ---------- Introduction Section ---------- */
 #intro{
     display: block;
     margin: 50px auto;
@@ -28,4 +28,9 @@
     padding: 10px;
     border: .1px solid;
     border-radius: 5px;    
+}
+
+/* ---------- Quiz Section ---------- */
+#quiz-content {
+    display: none;
 }

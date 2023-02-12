@@ -30,6 +30,33 @@
             THEN I can save my initials and my score
     -->
 
+    <!-- Steps Needed:
+        -Header Section:
+            Placeholder for time left
+            Link to highscores
+
+        - Intro: MVP Met
+            > The page the user views as soon as they reach our webpage
+            > Have an introductory heading and paragraph explaining the quiz
+            > Include a start quiz button which makes the intro dissapead and then begins the quiz
+            >
+
+        - Quiz Section:
+            > Once loaded, the first question pops in
+            > Create objects within JS which contains all of the questions and the correct answers.
+            > Keep a tally (variable) for correct and incorrect answers
+            > When a question is answered, the result of that answer appears at the bottom section of the question choices
+            > Once the quiz is completed, we then go to the closing section to discuss the reuslts
+
+        - Closing Section:
+            > Show the final score as a percentage and with a raw tally
+            > Allow the user to store their initials in a variable which we can then push to another dashboard
+            > The highscores dashboard can be an array which we push initials and scores to - so that it is dynamic and can grow without us having to go into the code to increase parameters
+            > Once highscores are submitted, have the buttons/options to go back and re-take the quiz
+    
+
+    -->
+
     <header>
         <p>HighScores</p>
         <p>Time: </p>
@@ -45,9 +72,18 @@
             <button id="start-button" class="btn">Start Quiz!</button>
         </section>
 
+        <section id="quiz-content">
+            <h1 id="question">Question Placeholder</h1>
+            <div class="answer-group">
+                <div class="answer-choices">a</div>
+                <div class="answer-choices">b</div>
+                <div class="answer-choices">c</div>
+                <div class="answer-choices">d</div>
+            </div>
+            <div class="question-result">abc</div>
+        </section>
+
     </main>
-
-
     <script src="index.js" async defer></script>
 </body>
 
