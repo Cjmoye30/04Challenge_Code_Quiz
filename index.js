@@ -2,12 +2,12 @@
 var startBtn = document.querySelector("#start-button");
 var intro = document.querySelector("#intro");
 var questionSection = document.querySelector("#quiz-content");
+
 // Document Selectors for questions and answers
 var answerOptions = document.querySelectorAll(".answer-choices");
-
 for (var i = 0; i <answerOptions.length; i++){
-    answerOptions[i].addEventListener("click", function(){
-        console.log("A selection was made!");
+    answerOptions[i].addEventListener("click", function(event){
+        console.log(event.target.classList[1]);
     })
 }
 
