@@ -7,20 +7,17 @@ var answerOptions = document.querySelectorAll(".answer-choices");
 var currentQResult = document.querySelector(".question-result");
 
 // Initialize Counters
-var correct = 0;
-var wrong = 0;
+var totalCorrect = 0;
+var totalWrong = 0;
 var qIndex = 1;
-
-// Query Selector for all answer chocies
-
-
 
 // Starting the quiz - I can put this in another function called execute whic
 startBtn.addEventListener("click", function () {
+    console.log(qIndex);
     removeIntro();
     returnQuestions();
-    runQuiz();
-    answerCheck();
+    // runQuiz();
+    // answerCheck();
 });
 
 // Remove the intro section when clicked and show the quiz content section
@@ -69,30 +66,75 @@ function returnQuestions() {
     return qArray;
 }
 
-function runQuiz (){
+// Function which is changing the inner HTML for the user upon answering the question
+// Stops when we reach the last question
+// Also need to stop when the timer reaches a certain point.
+function runQuiz() {
+
+    // Stop running the quiz once we hit the last question and proceed to the next step
+    if (qIndex === returnQuestions().length) {
+        return alert("You finished!!!");
+    }
+
+    var status = "Current Question: " + qIndex + "\nTotal Correct: " + totalCorrect + "\nTotal Wrong: " + totalWrong;
+
+    console.log(status);
+
     currentQ.innerHTML = returnQuestions()[qIndex].question;
-    for(var i = 0; i <answerOptions.length; i++){
+    for (var i = 0; i < answerOptions.length; i++) {
         answerOptions[i].innerHTML = returnQuestions()[qIndex].answers[i];
+        currentQResult.innerHTML = returnQuestions()[qIndex].correctAnswer;
     }
 }
 
-function answerCheck (){
+// Does this function need to be broken apart?
+function answerCheck() {
 
     var correct = returnQuestions()[qIndex].correctAnswer;
-    
+    console.log(correct);
+
     // For loop to place an event listener on all of the answer choices
     for (var i = 0; i < answerOptions.length; i++) {
         answerOptions[i].addEventListener("click", function (event) {
-            console.log(event.target.classList[1]);
+            console.log("User chose: "+event.target.classList[1]);
 
-            if(event.target.classList[1] === correct) {
+            if (event.target.classList[1] === correct) {
                 console.log("Correct!");
+                console.log("Correct Answer: "+correct);
+                totalCorrect++;
+                qIndex++;
+                runQuiz();
             } else {
                 console.log("Wrong!")
+                console.log("Correct Answer: "+correct);
+                totalWrong++;
+                qIndex++;
+                runQuiz();
             }
         })
     }
-
-    // Texting the answer choice against the correct answer.
-
 }
+
+// Keeping user clicks outside of a function to track what is going on
+var userAnswer;
+for (var i = 0; i < answerOptions.length; i++){
+    answerOptions[i].addEventListener("click", function(e){
+        userAnswer = e.target.classList[1];
+        console.log(userAnswer);
+        answerCheck2();
+    })
+}
+
+function answerCheck2 (){
+    var correct = returnQuestions()[qIndex].correctAnswer;
+    // console.log (userAnswer);
+    // console.log(correct);
+
+    if (userAnswer === correct) {
+        console.log("Correct!")
+    } else {
+        console.log("incorrect!")
+    }
+}
+
+
