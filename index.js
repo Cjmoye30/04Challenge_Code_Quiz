@@ -71,8 +71,12 @@ function returnQuestions() {
 // Also need to stop when the timer reaches a certain point.
 function runQuiz() {
 
+    // Removing the result from the previous question before showing the next
+    currentQResult.innerHTML ="";
+
     // Stop running the quiz once we hit the last question and proceed to the next step
     if (qIndex === returnQuestions().length) {
+        questionSection.setAttribute("style", "display: none;");
         return alert("You finished!!!");
     }
 
@@ -87,35 +91,36 @@ function runQuiz() {
 }
 
 // Does this function need to be broken apart?
-function answerCheck() {
+// function answerCheck() {
 
-    var correct = returnQuestions()[qIndex].correctAnswer;
-    console.log(correct);
+//     var correct = returnQuestions()[qIndex].correctAnswer;
+//     console.log(correct);
 
-    // For loop to place an event listener on all of the answer choices
-    for (var i = 0; i < answerOptions.length; i++) {
-        answerOptions[i].addEventListener("click", function (event) {
-            console.log("User chose: "+event.target.classList[1]);
+//     // For loop to place an event listener on all of the answer choices
+//     for (var i = 0; i < answerOptions.length; i++) {
+//         answerOptions[i].addEventListener("click", function (event) {
+//             console.log("User chose: "+event.target.classList[1]);
 
-            if (event.target.classList[1] === correct) {
-                console.log("Correct!");
-                console.log("Correct Answer: "+correct);
-                totalCorrect++;
-                qIndex++;
-                runQuiz();
-            } else {
-                console.log("Wrong!")
-                console.log("Correct Answer: "+correct);
-                totalWrong++;
-                qIndex++;
-                runQuiz();
-            }
-        })
-    }
-}
+//             if (event.target.classList[1] === correct) {
+//                 console.log("Correct!");
+//                 console.log("Correct Answer: "+correct);
+//                 totalCorrect++;
+//                 qIndex++;
+//                 runQuiz();
+//             } else {
+//                 console.log("Wrong!")
+//                 console.log("Correct Answer: "+correct);
+//                 totalWrong++;
+//                 qIndex++;
+//                 runQuiz();
+//             }
+//         })
+//     }
+// }
 
 // Keeping user clicks outside of a function to track what is going on
 // Works successfully!
+
 var userAnswer;
 for (var i = 0; i < answerOptions.length; i++){
     answerOptions[i].addEventListener("click", function(e){
@@ -134,15 +139,16 @@ function answerCheck2 (){
         // currentQResult.innerHTML = returnQuestions()[qIndex].correctAnswer;
         qIndex++;
         totalCorrect++;
+        currentQResult.innerHTML = "Correct!!"
         setTimeout(function(){
             runQuiz();
         }, 1000);
-        // runQuiz();
     } else {
         console.log("incorrect!")
         // currentQResult.innerHTML = returnQuestions()[qIndex].correctAnswer;
         qIndex++;
         totalWrong++;
+        currentQResult.innerHTML = "Wrong!!"
         setTimeout(function(){
             runQuiz();
         }, 1000);
@@ -153,3 +159,4 @@ function answerCheck2 (){
 // setTimeout(function () {
 //     console.log("Hello??????");
 //   }, 1000);
+
