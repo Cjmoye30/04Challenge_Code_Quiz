@@ -9,14 +9,14 @@ var currentQResult = document.querySelector(".question-result");
 // Initialize Counters
 var totalCorrect = 0;
 var totalWrong = 0;
-var qIndex = 1;
+var qIndex = 0;
 
 // Starting the quiz - I can put this in another function called execute whic
 startBtn.addEventListener("click", function () {
     console.log(qIndex);
     removeIntro();
     returnQuestions();
-    // runQuiz();
+    runQuiz();
     // answerCheck();
 });
 
@@ -32,10 +32,10 @@ function returnQuestions() {
     var q1 = {
         question: "What color is my underwear?",
         answers: {
-            0: "Red",
-            1: "Blue",
-            2: "Green",
-            3: "Potato"
+            0: "A: Red",
+            1: "B: Blue",
+            2: "C: Green",
+            3: "D: Potato"
         },
         correctAnswer: 'd'
     }
@@ -43,10 +43,10 @@ function returnQuestions() {
     var q2 = {
         question: "Who do you think you are?",
         answers: {
-            0: "Excuse me?",
-            1: "I am Cambric",
-            2: "A tame salmon",
-            3: "2+2=5"
+            0: "A: Excuse me?",
+            1: "B: I am Cambric",
+            2: "C: A tame salmon",
+            3: "D: 2+2=5"
         },
         correctAnswer: 'b'
     }
@@ -54,10 +54,10 @@ function returnQuestions() {
     var q3 = {
         question: "What gives you the right?",
         answers: {
-            0: "My entire existence",
-            1: "null",
-            2: "Shovel!",
-            3: "I give up"
+            0: "A: My entire existence",
+            1: "B: null",
+            2: "C: Shovel!",
+            3: "D: I give up"
         },
         correctAnswer: 'a'
     }
@@ -83,7 +83,6 @@ function runQuiz() {
     currentQ.innerHTML = returnQuestions()[qIndex].question;
     for (var i = 0; i < answerOptions.length; i++) {
         answerOptions[i].innerHTML = returnQuestions()[qIndex].answers[i];
-        currentQResult.innerHTML = returnQuestions()[qIndex].correctAnswer;
     }
 }
 
@@ -116,6 +115,7 @@ function answerCheck() {
 }
 
 // Keeping user clicks outside of a function to track what is going on
+// Works successfully!
 var userAnswer;
 for (var i = 0; i < answerOptions.length; i++){
     answerOptions[i].addEventListener("click", function(e){
@@ -125,16 +125,31 @@ for (var i = 0; i < answerOptions.length; i++){
     })
 }
 
+// Add a 1-1.5 second delay before showing the next question
 function answerCheck2 (){
     var correct = returnQuestions()[qIndex].correctAnswer;
-    // console.log (userAnswer);
-    // console.log(correct);
 
     if (userAnswer === correct) {
-        console.log("Correct!")
+        console.log("Correct!");
+        // currentQResult.innerHTML = returnQuestions()[qIndex].correctAnswer;
+        qIndex++;
+        totalCorrect++;
+        setTimeout(function(){
+            runQuiz();
+        }, 1000);
+        // runQuiz();
     } else {
         console.log("incorrect!")
+        // currentQResult.innerHTML = returnQuestions()[qIndex].correctAnswer;
+        qIndex++;
+        totalWrong++;
+        setTimeout(function(){
+            runQuiz();
+        }, 1000);
     }
 }
 
-
+// Timeout test
+// setTimeout(function () {
+//     console.log("Hello??????");
+//   }, 1000);
