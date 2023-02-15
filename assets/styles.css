@@ -34,3 +34,13 @@
 #quiz-content {
     display: none;
 }
+
+/* ---------- Final Score Section ---------- */
+#final-score {
+    display: none;
+}
+
+/* ---------- Highscores Section ---------- */
+#highscores {
+    display: none;
+}

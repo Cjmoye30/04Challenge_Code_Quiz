@@ -2,6 +2,8 @@
 var startBtn = document.querySelector("#start-button");
 var intro = document.querySelector("#intro");
 var questionSection = document.querySelector("#quiz-content");
+var finalScoreSection = document.querySelector("#final-score");
+
 var currentQ = document.querySelector("#question");
 var answerOptions = document.querySelectorAll(".answer-choices");
 var currentQResult = document.querySelector(".question-result");
@@ -11,6 +13,10 @@ var totalCorrect = 0;
 var totalWrong = 0;
 var qIndex = 0;
 
+// Variables to get the users final score:
+var totalQuestions = returnQuestions().length;
+var finalScore = (totalCorrect/totalQuestions)*100+"%!";
+
 // Starting the quiz - I can put this in another function called execute whic
 startBtn.addEventListener("click", function () {
     console.log(qIndex);
@@ -19,6 +25,16 @@ startBtn.addEventListener("click", function () {
     runQuiz();
     // answerCheck();
 });
+
+// Event listener for all answer choices - once an answer choice is selected, it is then run through the answer check function and proceedes to the next question while updating the counters
+var userAnswer;
+for (var i = 0; i < answerOptions.length; i++){
+    answerOptions[i].addEventListener("click", function(e){
+        userAnswer = e.target.classList[1];
+        console.log(userAnswer);
+        answerCheck();
+    })
+}
 
 // Remove the intro section when clicked and show the quiz content section
 function removeIntro() {
@@ -77,6 +93,10 @@ function runQuiz() {
     // Stop running the quiz once we hit the last question and proceed to the next step
     if (qIndex === returnQuestions().length) {
         questionSection.setAttribute("style", "display: none;");
+
+
+        // call function for the final score section
+        showResults();
         return alert("You finished!!!");
     }
 
@@ -90,48 +110,8 @@ function runQuiz() {
     }
 }
 
-// Does this function need to be broken apart?
-// function answerCheck() {
-
-//     var correct = returnQuestions()[qIndex].correctAnswer;
-//     console.log(correct);
-
-//     // For loop to place an event listener on all of the answer choices
-//     for (var i = 0; i < answerOptions.length; i++) {
-//         answerOptions[i].addEventListener("click", function (event) {
-//             console.log("User chose: "+event.target.classList[1]);
-
-//             if (event.target.classList[1] === correct) {
-//                 console.log("Correct!");
-//                 console.log("Correct Answer: "+correct);
-//                 totalCorrect++;
-//                 qIndex++;
-//                 runQuiz();
-//             } else {
-//                 console.log("Wrong!")
-//                 console.log("Correct Answer: "+correct);
-//                 totalWrong++;
-//                 qIndex++;
-//                 runQuiz();
-//             }
-//         })
-//     }
-// }
-
-// Keeping user clicks outside of a function to track what is going on
-// Works successfully!
-
-var userAnswer;
-for (var i = 0; i < answerOptions.length; i++){
-    answerOptions[i].addEventListener("click", function(e){
-        userAnswer = e.target.classList[1];
-        console.log(userAnswer);
-        answerCheck2();
-    })
-}
-
 // Add a 1-1.5 second delay before showing the next question
-function answerCheck2 (){
+function answerCheck (){
     var correct = returnQuestions()[qIndex].correctAnswer;
 
     if (userAnswer === correct) {
@@ -155,8 +135,9 @@ function answerCheck2 (){
     }
 }
 
-// Timeout test
-// setTimeout(function () {
-//     console.log("Hello??????");
-//   }, 1000);
+function showResults (){
+    console.log("Hello from the answerCheck function!!!");
+    questionSection.setAttribute("style", "display: none;");
+    finalScoreSection.setAttribute("style", "display: block;");
 
+}

@@ -69,6 +69,7 @@
             <button id="start-button" class="btn">Start Quiz!</button>
         </section>
 
+        <!-- Section which will show the questions and progress through until the last question -->
         <section id="quiz-content">
             <h1 id="question">Question Placeholder</h1>
             <div class="answer-group">
@@ -78,6 +79,28 @@
                 <div class="answer-choices d">D:</div>
             </div>
             <div class="question-result"></div>
+        </section>
+
+        <!-- Final score will be added as inner HTML to the final score number ID -->
+        <section id="final-score">
+            <h1>All Done!</h1>
+            <p id="final-score-number">Your final score is:</p>
+            
+            <div class="email">
+                <p>Email: </p><input type="email" placeholder="Email Address">
+                <button type="submit">Submit</button>
+            </div>
+        </section>
+
+        <!-- Highscores section will begin blank, and the add usernames and scores over time. This can be cleared out when accessing the local storage to clear it out -->
+        <!-- As users finish the quiz, their initials and score will be appended to the ul -->
+        <section id="highscores">
+            <h1>Highscores</h1>
+            <ul></ul>
+            <div class="closing-buttons">
+                <button>Go Back</button>
+                <button>Clear Highscores</button>
+            </div>
         </section>
 
     </main>
