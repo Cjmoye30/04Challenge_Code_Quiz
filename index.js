@@ -93,11 +93,9 @@ function runQuiz() {
     // Stop running the quiz once we hit the last question and proceed to the next step
     if (qIndex === returnQuestions().length) {
         questionSection.setAttribute("style", "display: none;");
-
-
-        // call function for the final score section
         showResults();
-        return alert("You finished!!!");
+        return
+        // Have to keep an empty return otherwise the function will complete until the very end and throw an error
     }
 
     var status = "Current Question: " + qIndex + "\nTotal Correct: " + totalCorrect + "\nTotal Wrong: " + totalWrong;
@@ -139,5 +137,8 @@ function showResults (){
     console.log("Hello from the answerCheck function!!!");
     questionSection.setAttribute("style", "display: none;");
     finalScoreSection.setAttribute("style", "display: block;");
+
+    var finalScoreText = document.querySelector("#final-score-number");
+    finalScoreText.innerHTML = "Your final score was: " +Math.round((totalCorrect/totalQuestions)*100)+"%!";
 
 }
