@@ -1,8 +1,9 @@
-// All Document Selectors and Event Listeners
+// All Document Selectors
 var startBtn = document.querySelector("#start-button");
 var intro = document.querySelector("#intro");
 var questionSection = document.querySelector("#quiz-content");
 var finalScoreSection = document.querySelector("#final-score");
+var finalScoreText = document.querySelector("#final-score-number");
 
 var currentQ = document.querySelector("#question");
 var answerOptions = document.querySelectorAll(".answer-choices");
@@ -17,6 +18,7 @@ var qIndex = 0;
 var totalQuestions = returnQuestions().length;
 var finalScore = (totalCorrect/totalQuestions)*100+"%!";
 
+// Event Listeners
 // Starting the quiz - I can put this in another function called execute whic
 startBtn.addEventListener("click", function () {
     console.log(qIndex);
@@ -134,11 +136,9 @@ function answerCheck (){
 }
 
 function showResults (){
-    console.log("Hello from the answerCheck function!!!");
+    // console.log("Hello from the answerCheck function!!!");
     questionSection.setAttribute("style", "display: none;");
     finalScoreSection.setAttribute("style", "display: block;");
-
-    var finalScoreText = document.querySelector("#final-score-number");
     finalScoreText.innerHTML = "Your final score was: " +Math.round((totalCorrect/totalQuestions)*100)+"%!";
 
 }
