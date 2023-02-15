@@ -1,8 +1,9 @@
-// All Document Selectors and Event Listeners
+// All Document Selectors
 var startBtn = document.querySelector("#start-button");
 var intro = document.querySelector("#intro");
 var questionSection = document.querySelector("#quiz-content");
 var finalScoreSection = document.querySelector("#final-score");
+var finalScoreText = document.querySelector("#final-score-number");
 
 var currentQ = document.querySelector("#question");
 var answerOptions = document.querySelectorAll(".answer-choices");
@@ -17,6 +18,7 @@ var qIndex = 0;
 var totalQuestions = returnQuestions().length;
 var finalScore = (totalCorrect/totalQuestions)*100+"%!";
 
+// Event Listeners
 // Starting the quiz - I can put this in another function called execute whic
 startBtn.addEventListener("click", function () {
     console.log(qIndex);
@@ -93,11 +95,9 @@ function runQuiz() {
     // Stop running the quiz once we hit the last question and proceed to the next step
     if (qIndex === returnQuestions().length) {
         questionSection.setAttribute("style", "display: none;");
-
-
-        // call function for the final score section
         showResults();
-        return alert("You finished!!!");
+        return
+        // Have to keep an empty return otherwise the function will complete until the very end and throw an error
     }
 
     var status = "Current Question: " + qIndex + "\nTotal Correct: " + totalCorrect + "\nTotal Wrong: " + totalWrong;
@@ -136,8 +136,9 @@ function answerCheck (){
 }
 
 function showResults (){
-    console.log("Hello from the answerCheck function!!!");
+    // console.log("Hello from the answerCheck function!!!");
     questionSection.setAttribute("style", "display: none;");
     finalScoreSection.setAttribute("style", "display: block;");
+    finalScoreText.innerHTML = "Your final score was: " +Math.round((totalCorrect/totalQuestions)*100)+"%!";
 
 }
