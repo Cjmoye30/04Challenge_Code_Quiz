@@ -16,27 +16,29 @@ var qIndex = 0;
 
 // Variables to get the users final score:
 var totalQuestions = returnQuestions().length;
-var finalScore = (totalCorrect/totalQuestions)*100+"%!";
+var finalScore = (totalCorrect / totalQuestions) * 100 + "%!";
 
 // Event Listeners
 // Starting the quiz - I can put this in another function called execute whic
 startBtn.addEventListener("click", function () {
-    console.log(qIndex);
+    // console.log(qIndex);
     removeIntro();
     returnQuestions();
     runQuiz();
+    // userClick();
     // answerCheck();
 });
 
-// Event listener for all answer choices - once an answer choice is selected, it is then run through the answer check function and proceedes to the next question while updating the counters
 var userAnswer;
-for (var i = 0; i < answerOptions.length; i++){
-    answerOptions[i].addEventListener("click", function(e){
+for (var i = 0; i < answerOptions.length; i++) {
+    answerOptions[i].addEventListener("click", function (e) {
         userAnswer = e.target.classList[1];
         console.log(userAnswer);
         answerCheck();
     })
 }
+
+// Instead of showing a delay - we could show a current tally below the questions so that any multiple clicks is not an issue
 
 // Remove the intro section when clicked and show the quiz content section
 function removeIntro() {
@@ -90,7 +92,7 @@ function returnQuestions() {
 function runQuiz() {
 
     // Removing the result from the previous question before showing the next
-    currentQResult.innerHTML ="";
+    resultReset();
 
     // Stop running the quiz once we hit the last question and proceed to the next step
     if (qIndex === returnQuestions().length) {
@@ -100,45 +102,53 @@ function runQuiz() {
         // Have to keep an empty return otherwise the function will complete until the very end and throw an error
     }
 
-    var status = "Current Question: " + qIndex + "\nTotal Correct: " + totalCorrect + "\nTotal Wrong: " + totalWrong;
-
-    console.log(status);
-
+    // Displays the currenct question based on the updated index
     currentQ.innerHTML = returnQuestions()[qIndex].question;
-    for (var i = 0; i < answerOptions.length; i++) {
-        answerOptions[i].innerHTML = returnQuestions()[qIndex].answers[i];
+
+    // Displays each of the answer choices based on the updated index
+    for (var j = 0; j < answerOptions.length; j++) {
+        answerOptions[j].innerHTML = returnQuestions()[qIndex].answers[j];
     }
+
+    // var status = "Current Question: " + qIndex + "\nTotal Correct: " + totalCorrect + "\nTotal Wrong: " + totalWrong;
+    // console.log(status);
+
 }
 
+
 // Add a 1-1.5 second delay before showing the next question
-function answerCheck (){
+function answerCheck() {
     var correct = returnQuestions()[qIndex].correctAnswer;
 
     if (userAnswer === correct) {
         console.log("Correct!");
-        // currentQResult.innerHTML = returnQuestions()[qIndex].correctAnswer;
         qIndex++;
         totalCorrect++;
-        currentQResult.innerHTML = "Correct!!"
-        setTimeout(function(){
+        currentQResult.innerHTML = "Correct!!";
+        currentQResult.setAttribute("style", "background-color: #CFFF8D; padding: 20px; border-radius: 10px");
+        setTimeout(function () {
             runQuiz();
-        }, 1000);
+        }, 500);
     } else {
-        console.log("incorrect!")
-        // currentQResult.innerHTML = returnQuestions()[qIndex].correctAnswer;
+        console.log("incorrect!");
         qIndex++;
         totalWrong++;
-        currentQResult.innerHTML = "Wrong!!"
-        setTimeout(function(){
+        currentQResult.innerHTML = "Wrong!!";
+        currentQResult.setAttribute("style", "background-color: #F0997D; padding: 20px; border-radius: 10px");
+        setTimeout(function () {
             runQuiz();
-        }, 1000);
+        }, 500);
     }
 }
 
-function showResults (){
+function resultReset() {
+    currentQResult.innerHTML = "";
+    currentQResult.removeAttribute("style");
+}
+
+function showResults() {
     // console.log("Hello from the answerCheck function!!!");
     questionSection.setAttribute("style", "display: none;");
     finalScoreSection.setAttribute("style", "display: block;");
-    finalScoreText.innerHTML = "Your final score was: " +Math.round((totalCorrect/totalQuestions)*100)+"%!";
-
+    finalScoreText.innerHTML = "Your final score was: " + Math.round((totalCorrect / totalQuestions) * 100) + "%!";
 }
