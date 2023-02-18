@@ -95,8 +95,11 @@
 
             <div class="initials-section">
                 <p>Enter Initials:</p>
-                <input id="initialsInput" type="text">
-                <button id="initials-submit-btn" type="submit">Submit</button>
+
+                <form id="initials-submit-form">
+                    <input id="initialsInput" type="text" placeholder="Enter Initials">
+                    <button id="initials-submit-btn" type="submit">Submit</button>
+                </form>
             </div>
         </section>
 
@@ -104,6 +107,7 @@
         <!-- As users finish the quiz, their initials and score will be appended to the ul -->
         <section id="highscores">
             <h1 class="section-header">Highscores</h1>
+            <!-- <p>Total Entries: <span id="#entriesNum"></span></p> -->
             <ul id="highscoresTable">
                 <!-- <li>
                     <span id="hiscoresInitials">initials placeholder</span>

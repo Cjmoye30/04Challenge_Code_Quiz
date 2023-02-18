@@ -5,7 +5,6 @@ var questionSection = document.querySelector("#quiz-content");
 var finalScoreSection = document.querySelector("#final-score");
 var finalScoreText = document.querySelector("#final-score-number");
 
-
 var currentQ = document.querySelector("#question");
 var answerOptions = document.querySelectorAll(".answer-choices");
 var currentQResult = document.querySelector(".question-result");
@@ -154,40 +153,110 @@ function showResults() {
     finalScore = Math.round((totalCorrect / totalQuestions) * 100);
     finalScoreText.innerHTML = "Your final score was: " + finalScore + "%!";
 
-
     // Commit the score to local storage
     localStorage.setItem("userScore", finalScore);
 
-    addHighScores();
+    // addHighScores();
+
+
+    addToStorage();
 }
 
-var highScoreAddBtn = document.querySelector("#initials-submit-btn");
+
 
 // // User Initials committed to local Storage
-function addHighScores() {
-    highScoreAddBtn.addEventListener("click", function (event) {
-        console.log("ready to add to high scores table!!");
+// function addHighScores() {
+//     highScoreAddBtn.addEventListener("click", function (event) {
+//         console.log("ready to add to high scores table!!");
 
-        // Commit initals to local storage
-        userInitials = userInitials.value;
-        localStorage.setItem("initials", userInitials);
+//         // Commit initals to local storage
+//         userInitials = userInitials.value;
+//         localStorage.setItem("initials", userInitials);
 
-        console.log(userInitials);
-    })
+//         console.log(userInitials);
+//     })
 
-    var table = document.querySelector("#highscoresTable");
-    var submission = document.createElement("li");
-    submission.appendChild(document.createTextNode(localStorage.getItem("initials") + " ----- " + localStorage.getItem("userScore")));
-    table.appendChild(submission);
+//     var table = document.querySelector("#highscoresTable");
+//     var submission = document.createElement("li");
+//     submission.appendChild(document.createTextNode(localStorage.getItem("initials") + " ----- " + localStorage.getItem("userScore")));
+//     table.appendChild(submission);
 
-}
+// }
 
+// addHighScores();
 
-
-console.log(localStorage.getItem("initials") + " ----- " + localStorage.getItem("userScore"));
+// console.log(localStorage.getItem("initials") + " ----- " + localStorage.getItem("userScore"));
 
 
 // Next I would need to create a new li variable and append this string onto the UL placeholder i already have?
+// Where am I stuck? I think I need to redo and rethink the commit to the local storage before appending to the highscores tables
+// Getting ahead of myself and it is stalling my progress
+// get a console log of the user score and the user initials after they submit them so that you can put them both into one string
+// Remember the acceptance criteria - I only need to save my initials and my score
 
 
+// var highScoreAddBtn = document.querySelector("#initials-submit-btn");
 
+// highScoreAddBtn.addEventListener("click", function () {
+//     console.log("Ready to submit initials!");
+//     finalScore = 90;
+//     console.log(finalScore);
+
+// })
+
+
+// fucking spell check and make sure everything is typed in correctly so you're not beating your head against a wall and deleting out code. That should be your first debug
+
+var highscoresArray = [];
+
+function addToStorage() {
+
+    var userInitials = document.querySelector("#initialsInput");
+    document.querySelector("#initials-submit-form").addEventListener("submit", function (event) {
+        event.preventDefault()
+
+        var playerData = {
+            user: userInitials.value,
+            score: finalScore
+        }
+
+        // Do we really need to be using local storage for this?
+        // I could just create a string of the name and score, push that to the array, and then attach to the li
+        // And then on each click (in this function) store the data
+
+        // console.log("Name: " +playerData.user+ " | Score: " + playerData.score);
+        var toString = "Name: " +playerData.user+ " | Score: " + playerData.score;
+        console.log(toString);
+
+        var li = document.createElement("li");
+        li.textContent = toString;
+        highscroesTable.appendChild(li);
+        
+
+        // localStorage.setItem("userData", JSON.stringify(playerData));
+        // var show = JSON.parse(localStorage.getItem("userData"));
+        // console.log(show);
+
+        // highscoresArray.push(show);
+        // console.log(highscoresArray);
+
+        // li.textContent = show;
+        // console.log(JSON.stringify(show));
+
+        // highscroesTable.appendChild(li);
+        
+    })
+}
+
+var highscroesTable = document.querySelector("#highscoresTable");
+var highscoresEntriesSpan = document.querySelector("#entriesNum");
+
+function renderHighScores() {
+
+    console.log("Time to add to highscores table!");
+
+    var li = document.createElement("li");
+    li.textContent = score;
+    highscroesTable.appendChild(li);
+
+}
