@@ -72,6 +72,7 @@
                 corporis similique culpa enim deserunt nisi fugiat necessitatibus odio amet modi quia consectetur,
                 voluptas reiciendis nihil doloribus illo omnis cupiditate labore soluta asperiores doloremque quibusdam,
                 iure aliquam? Aliquam, nobis nam!</p>
+                <p class="intro-description">You will be moved to the next question as soon as you click on an answer, so be sure to choose carefully! (aka you will break my website!)</p>
             <button id="start-button" class="btn">Start Quiz!</button>
         </section>
 
@@ -92,9 +93,10 @@
             <h1 class="section-header">All Done!</h1>
             <p id="final-score-number"></p>
 
-            <div class="email">
+            <div class="initials-section">
                 <p>Enter Initials:</p>
-                <button type="submit">Submit</button>
+                <input id="initialsInput" type="text">
+                <button id="initials-submit-btn" type="submit">Submit</button>
             </div>
         </section>
 
@@ -102,7 +104,12 @@
         <!-- As users finish the quiz, their initials and score will be appended to the ul -->
         <section id="highscores">
             <h1 class="section-header">Highscores</h1>
-            <ul></ul>
+            <ul id="highscoresTable">
+                <!-- <li>
+                    <span id="hiscoresInitials">initials placeholder</span>
+                    <span id="highscoresScore">score placeholder</span>
+                </li> -->
+            </ul>
             <div class="closing-buttons">
                 <button>Go Back</button>
                 <button>Clear Highscores</button>

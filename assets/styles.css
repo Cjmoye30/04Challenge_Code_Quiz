@@ -12,7 +12,7 @@
     margin: 0;
     padding: 0;
     font-family: 'Josefin Sans', sans-serif;
-    /* border: .1px solid; */
+    border: .1px solid;
 }
 
 header {
@@ -33,6 +33,10 @@ section {
     width: 75%;
     display: flex;
     flex-direction: row;
+}
+
+li {
+    list-style: none;
 }
 
 /* ---------- Introduction Section ---------- */
@@ -63,6 +67,7 @@ section {
     background-color: var(--light1);
     color: var(--dark1);
     border-bottom: 1px solid var(--dark1);
+    margin-bottom: 20px;
 }
 
 
@@ -99,7 +104,7 @@ section {
 
 /* --------- Pseudo Selectors ---------- */
 .answer-choices:hover{
-    padding: 24px 20px;
+    /* padding: 24px 20px; */
     background-color: var(--light1);
     /* font-size: 28px; */
     transition: all 0.25s;
@@ -112,10 +117,36 @@ section {
 
 /* ---------- Final Score Section ---------- */
 #final-score {
-    display: none;
+    /* display: none; */
+    display: flex;
+    flex-direction: column;
+    font-size: 3rem;
+}
+
+.initials-section {
+    display: flex;
+    font-size: 2rem;
+    align-items: center;
+    padding: 20px 0;
+    line-height: 3rem;
+}
+
+.initials-section button {
+    background-color: var(--dark1);
+    color: var(--light2);
+    padding: 5px 20px;
+    margin-left: 20px;
+    font-size: 2rem;
+}
+
+#initialsInput {
+    font-size: 3rem;
 }
 
 /* ---------- Highscores Section ---------- */
 #highscores {
-    display: none;
+    /* display: none; */
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
 }

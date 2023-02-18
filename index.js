@@ -5,6 +5,7 @@ var questionSection = document.querySelector("#quiz-content");
 var finalScoreSection = document.querySelector("#final-score");
 var finalScoreText = document.querySelector("#final-score-number");
 
+
 var currentQ = document.querySelector("#question");
 var answerOptions = document.querySelectorAll(".answer-choices");
 var currentQResult = document.querySelector(".question-result");
@@ -16,7 +17,7 @@ var qIndex = 0;
 
 // Variables to get the users final score:
 var totalQuestions = returnQuestions().length;
-var finalScore = (totalCorrect / totalQuestions) * 100 + "%!";
+var finalScore = 0;
 
 // Event Listeners
 // Starting the quiz - I can put this in another function called execute whic
@@ -147,8 +148,46 @@ function resultReset() {
 }
 
 function showResults() {
-    // console.log("Hello from the answerCheck function!!!");
     questionSection.setAttribute("style", "display: none;");
     finalScoreSection.setAttribute("style", "display: block;");
-    finalScoreText.innerHTML = "Your final score was: " + Math.round((totalCorrect / totalQuestions) * 100) + "%!";
+
+    finalScore = Math.round((totalCorrect / totalQuestions) * 100);
+    finalScoreText.innerHTML = "Your final score was: " + finalScore + "%!";
+
+
+    // Commit the score to local storage
+    localStorage.setItem("userScore", finalScore);
+
+    addHighScores();
 }
+
+var highScoreAddBtn = document.querySelector("#initials-submit-btn");
+
+// // User Initials committed to local Storage
+function addHighScores() {
+    highScoreAddBtn.addEventListener("click", function (event) {
+        console.log("ready to add to high scores table!!");
+
+        // Commit initals to local storage
+        userInitials = userInitials.value;
+        localStorage.setItem("initials", userInitials);
+
+        console.log(userInitials);
+    })
+
+    var table = document.querySelector("#highscoresTable");
+    var submission = document.createElement("li");
+    submission.appendChild(document.createTextNode(localStorage.getItem("initials") + " ----- " + localStorage.getItem("userScore")));
+    table.appendChild(submission);
+
+}
+
+
+
+console.log(localStorage.getItem("initials") + " ----- " + localStorage.getItem("userScore"));
+
+
+// Next I would need to create a new li variable and append this string onto the UL placeholder i already have?
+
+
+
