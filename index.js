@@ -14,7 +14,7 @@ var totalCorrect = 0;
 var totalWrong = 0;
 var qIndex = 0;
 
-var secondsLeft = 5;
+var secondsLeft = 60;
 
 // Variables to get the users final score:
 var totalQuestions = returnQuestions().length;
@@ -124,6 +124,7 @@ function answerCheck() {
         }, 500);
     } else {
         console.log("incorrect!");
+        secondsLeft -= 10;
         qIndex++;
         totalWrong++;
         currentQResult.innerHTML = "Wrong!!";
@@ -154,6 +155,7 @@ restart.addEventListener("click", function () {
     totalCorrect = 0;
     totalWrong = 0;
     qIndex = 0;
+    secondsLeft = 60;
     console.log("Current Question: " + qIndex + "\nTotal Correct: " + totalCorrect + "\nTotal Wrong: " + totalWrong);
     finalScoreAlert.innerHTML = "";
 
@@ -205,7 +207,6 @@ var finalScoreAlert = document.querySelector("#final-score-alert");
 countdown.textContent = secondsLeft;
 
 function setTime (){
-    secondsLeft = 5;
     var timeInterval = setInterval(function(){
         secondsLeft --;
         countdown.textContent = secondsLeft;
@@ -224,5 +225,15 @@ function setTime (){
             showResults();
         }
     },1000)
+}
+
+var viewHS = document.querySelector("#viewHS");
+viewHS.addEventListener("click", showHighScores);
+
+function showHighScores (){
+    intro.setAttribute("style", "display: none;");
+    questionSection.setAttribute("style", "display: none;");
+    finalScoreSection.setAttribute("style", "display: none;");
+    highscoresSection.setAttribute("style", "display: block;");
 }
 
