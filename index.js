@@ -158,11 +158,15 @@ restart.addEventListener("click", function () {
     finalScoreAlert.innerHTML = "";
 
     questionSection.setAttribute("style", "display: block;");
+    highscoresSection.setAttribute("style", "display: none;");
+    finalScoreSection.setAttribute("style", "display: none;");
+
     returnQuestions();
     setTime();
     runQuiz();
 })
 
+var highscoresSection = document.querySelector("#highscores");
 var highscroesTable = document.querySelector("#highscoresTable");
 var highscoresArray = [];
 
@@ -182,6 +186,7 @@ document.querySelector("#initials-submit-form").addEventListener("submit", funct
     var toString = "Name: " + playerData.user + " | Score: " + playerData.score;
     console.log(toString);
 
+    highscoresSection.setAttribute("style", "display: block;");
     addHighScores();
 })
 
