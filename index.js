@@ -20,13 +20,12 @@ var finalScore = 0;
 
 // Event Listeners
 // Starting the quiz - I can put this in another function called execute whic
+// Store this in a function called init and then call init when you restart the quiz!
 startBtn.addEventListener("click", function () {
     // console.log(qIndex);
     removeIntro();
     returnQuestions();
     runQuiz();
-    // userClick();
-    // answerCheck();
 });
 
 var userAnswer;
@@ -154,12 +153,10 @@ function showResults() {
     finalScoreText.innerHTML = "Your final score was: " + finalScore + "%!";
 
     // Commit the score to local storage
-    localStorage.setItem("userScore", finalScore);
+    // localStorage.setItem("userScore", finalScore);
 
     // addHighScores();
-
-
-    addToStorage();
+    // addToStorage();
 }
 
 
@@ -207,56 +204,59 @@ function showResults() {
 
 // fucking spell check and make sure everything is typed in correctly so you're not beating your head against a wall and deleting out code. That should be your first debug
 
+
+var restart = document.querySelector("#restart");
+restart.addEventListener("click", function () {
+
+    totalCorrect = 0;
+    totalWrong = 0;
+    qIndex = 0;
+    console.log("Current Question: " + qIndex + "\nTotal Correct: " + totalCorrect + "\nTotal Wrong: " + totalWrong);
+
+    questionSection.setAttribute("style", "display: block;");
+    returnQuestions();
+    runQuiz();
+})
+
+
+
+
+
+var highscroesTable = document.querySelector("#highscoresTable");
 var highscoresArray = [];
 
-function addToStorage() {
+// function addToStorage() {
 
     var userInitials = document.querySelector("#initialsInput");
+
     document.querySelector("#initials-submit-form").addEventListener("submit", function (event) {
-        event.preventDefault()
+        event.preventDefault();
+        // addHighScores();
 
         var playerData = {
             user: userInitials.value,
             score: finalScore
         }
 
-        // Do we really need to be using local storage for this?
-        // I could just create a string of the name and score, push that to the array, and then attach to the li
-        // And then on each click (in this function) store the data
+        highscoresArray.push(playerData);
+        console.log(highscoresArray.length);
 
-        // console.log("Name: " +playerData.user+ " | Score: " + playerData.score);
-        var toString = "Name: " +playerData.user+ " | Score: " + playerData.score;
+        var toString = "Name: " + playerData.user + " | Score: " + playerData.score;
         console.log(toString);
 
-        var li = document.createElement("li");
-        li.textContent = toString;
-        highscroesTable.appendChild(li);
-        
+        addHighScores();
 
-        // localStorage.setItem("userData", JSON.stringify(playerData));
-        // var show = JSON.parse(localStorage.getItem("userData"));
-        // console.log(show);
-
-        // highscoresArray.push(show);
-        // console.log(highscoresArray);
-
-        // li.textContent = show;
-        // console.log(JSON.stringify(show));
-
-        // highscroesTable.appendChild(li);
-        
     })
-}
+// }
 
-var highscroesTable = document.querySelector("#highscoresTable");
-var highscoresEntriesSpan = document.querySelector("#entriesNum");
+function addHighScores() {
+    highscroesTable.innerHTML = "";
+    // removeHighScores();
 
-function renderHighScores() {
 
-    console.log("Time to add to highscores table!");
-
-    var li = document.createElement("li");
-    li.textContent = score;
-    highscroesTable.appendChild(li);
-
+    for (var i = 0; i < highscoresArray.length; i++) {
+        var li = document.createElement("li");
+        li.textContent = highscoresArray[i].user + " | " + highscoresArray[i].score;
+        highscroesTable.appendChild(li);
+    }
 }
