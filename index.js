@@ -14,6 +14,8 @@ var totalCorrect = 0;
 var totalWrong = 0;
 var qIndex = 0;
 
+var secondsLeft = 5;
+
 // Variables to get the users final score:
 var totalQuestions = returnQuestions().length;
 var finalScore = 0;
@@ -21,10 +23,10 @@ var finalScore = 0;
 // Event Listeners
 // Starting the quiz - I can put this in another function called execute whic
 // Store this in a function called init and then call init when you restart the quiz!
-startBtn.addEventListener("click", function () {
-    // console.log(qIndex);
+startBtn.addEventListener("click", function () {  
     removeIntro();
     returnQuestions();
+    setTime();
     runQuiz();
 });
 
@@ -36,8 +38,6 @@ for (var i = 0; i < answerOptions.length; i++) {
         answerCheck();
     })
 }
-
-// Instead of showing a delay - we could show a current tally below the questions so that any multiple clicks is not an issue
 
 // Remove the intro section when clicked and show the quiz content section
 function removeIntro() {
@@ -96,24 +96,18 @@ function runQuiz() {
     // Stop running the quiz once we hit the last question and proceed to the next step
     if (qIndex === returnQuestions().length) {
         questionSection.setAttribute("style", "display: none;");
+        finalScoreAlert.innerHTML = "All Done!";
         showResults();
         return
         // Have to keep an empty return otherwise the function will complete until the very end and throw an error
     }
 
-    // Displays the currenct question based on the updated index
     currentQ.innerHTML = returnQuestions()[qIndex].question;
 
-    // Displays each of the answer choices based on the updated index
     for (var j = 0; j < answerOptions.length; j++) {
         answerOptions[j].innerHTML = returnQuestions()[qIndex].answers[j];
     }
-
-    // var status = "Current Question: " + qIndex + "\nTotal Correct: " + totalCorrect + "\nTotal Wrong: " + totalWrong;
-    // console.log(status);
-
 }
-
 
 // Add a 1-1.5 second delay before showing the next question
 function answerCheck() {
@@ -150,60 +144,9 @@ function showResults() {
     finalScoreSection.setAttribute("style", "display: block;");
 
     finalScore = Math.round((totalCorrect / totalQuestions) * 100);
+    countdown.textContent = 0;
     finalScoreText.innerHTML = "Your final score was: " + finalScore + "%!";
-
-    // Commit the score to local storage
-    // localStorage.setItem("userScore", finalScore);
-
-    // addHighScores();
-    // addToStorage();
 }
-
-
-
-// // User Initials committed to local Storage
-// function addHighScores() {
-//     highScoreAddBtn.addEventListener("click", function (event) {
-//         console.log("ready to add to high scores table!!");
-
-//         // Commit initals to local storage
-//         userInitials = userInitials.value;
-//         localStorage.setItem("initials", userInitials);
-
-//         console.log(userInitials);
-//     })
-
-//     var table = document.querySelector("#highscoresTable");
-//     var submission = document.createElement("li");
-//     submission.appendChild(document.createTextNode(localStorage.getItem("initials") + " ----- " + localStorage.getItem("userScore")));
-//     table.appendChild(submission);
-
-// }
-
-// addHighScores();
-
-// console.log(localStorage.getItem("initials") + " ----- " + localStorage.getItem("userScore"));
-
-
-// Next I would need to create a new li variable and append this string onto the UL placeholder i already have?
-// Where am I stuck? I think I need to redo and rethink the commit to the local storage before appending to the highscores tables
-// Getting ahead of myself and it is stalling my progress
-// get a console log of the user score and the user initials after they submit them so that you can put them both into one string
-// Remember the acceptance criteria - I only need to save my initials and my score
-
-
-// var highScoreAddBtn = document.querySelector("#initials-submit-btn");
-
-// highScoreAddBtn.addEventListener("click", function () {
-//     console.log("Ready to submit initials!");
-//     finalScore = 90;
-//     console.log(finalScore);
-
-// })
-
-
-// fucking spell check and make sure everything is typed in correctly so you're not beating your head against a wall and deleting out code. That should be your first debug
-
 
 var restart = document.querySelector("#restart");
 restart.addEventListener("click", function () {
@@ -212,51 +155,69 @@ restart.addEventListener("click", function () {
     totalWrong = 0;
     qIndex = 0;
     console.log("Current Question: " + qIndex + "\nTotal Correct: " + totalCorrect + "\nTotal Wrong: " + totalWrong);
+    finalScoreAlert.innerHTML = "";
 
     questionSection.setAttribute("style", "display: block;");
     returnQuestions();
+    setTime();
     runQuiz();
 })
-
-
-
-
 
 var highscroesTable = document.querySelector("#highscoresTable");
 var highscoresArray = [];
 
-// function addToStorage() {
+var userInitials = document.querySelector("#initialsInput");
 
-    var userInitials = document.querySelector("#initialsInput");
+document.querySelector("#initials-submit-form").addEventListener("submit", function (event) {
+    event.preventDefault();
 
-    document.querySelector("#initials-submit-form").addEventListener("submit", function (event) {
-        event.preventDefault();
-        // addHighScores();
+    var playerData = {
+        user: userInitials.value,
+        score: finalScore
+    }
 
-        var playerData = {
-            user: userInitials.value,
-            score: finalScore
-        }
+    highscoresArray.push(playerData);
+    console.log(highscoresArray.length);
 
-        highscoresArray.push(playerData);
-        console.log(highscoresArray.length);
+    var toString = "Name: " + playerData.user + " | Score: " + playerData.score;
+    console.log(toString);
 
-        var toString = "Name: " + playerData.user + " | Score: " + playerData.score;
-        console.log(toString);
-
-        addHighScores();
-
-    })
-// }
+    addHighScores();
+})
 
 function addHighScores() {
     highscroesTable.innerHTML = "";
-    // removeHighScores();
-
-
     for (var i = 0; i < highscoresArray.length; i++) {
         var li = document.createElement("li");
         li.textContent = highscoresArray[i].user + " | " + highscoresArray[i].score;
         highscroesTable.appendChild(li);
     }
 }
+
+var conuntdown = document.querySelector("#countdown");
+var finalScoreAlert = document.querySelector("#final-score-alert");
+
+countdown.textContent = secondsLeft;
+
+function setTime (){
+    secondsLeft = 5;
+    var timeInterval = setInterval(function(){
+        secondsLeft --;
+        countdown.textContent = secondsLeft;
+
+        if (qIndex === returnQuestions().length) {
+            questionSection.setAttribute("style", "display: none;");
+            finalScoreAlert.innerHTML = "All Done!";
+            clearInterval(timeInterval);
+            showResults();
+            return
+        }     
+
+        if (secondsLeft === 0) {
+            clearInterval(timeInterval);
+            finalScoreAlert.innerHTML = "Times up! Your final score:";
+            showResults();
+        }
+    },1000)
+}
+
