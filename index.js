@@ -9,21 +9,19 @@ var currentQ = document.querySelector("#question");
 var answerOptions = document.querySelectorAll(".answer-choices");
 var currentQResult = document.querySelector(".question-result");
 
-// Initialize Counters
 var totalCorrect = 0;
 var totalWrong = 0;
 var qIndex = 0;
-
-var secondsLeft = 5;
-
-// Variables to get the users final score:
 var totalQuestions = returnQuestions().length;
 var finalScore = 0;
+
+var secondsLeft = 60;
+
 
 // Event Listeners
 // Starting the quiz - I can put this in another function called execute whic
 // Store this in a function called init and then call init when you restart the quiz!
-startBtn.addEventListener("click", function () {  
+startBtn.addEventListener("click", function () {
     removeIntro();
     returnQuestions();
     setTime();
@@ -124,6 +122,7 @@ function answerCheck() {
         }, 500);
     } else {
         console.log("incorrect!");
+        secondsLeft -= 10;
         qIndex++;
         totalWrong++;
         currentQResult.innerHTML = "Wrong!!";
@@ -150,19 +149,27 @@ function showResults() {
 
 var restart = document.querySelector("#restart");
 restart.addEventListener("click", function () {
-
-    totalCorrect = 0;
-    totalWrong = 0;
-    qIndex = 0;
-    console.log("Current Question: " + qIndex + "\nTotal Correct: " + totalCorrect + "\nTotal Wrong: " + totalWrong);
-    finalScoreAlert.innerHTML = "";
+    reset();
 
     questionSection.setAttribute("style", "display: block;");
+    highscoresSection.setAttribute("style", "display: none;");
+    finalScoreSection.setAttribute("style", "display: none;");
+
     returnQuestions();
     setTime();
     runQuiz();
 })
 
+function reset() {
+    totalCorrect = 0;
+    totalWrong = 0;
+    qIndex = 0;
+    secondsLeft = 60;
+    console.log("Current Question: " + qIndex + "\nTotal Correct: " + totalCorrect + "\nTotal Wrong: " + totalWrong);
+    finalScoreAlert.innerHTML = "";
+}
+
+var highscoresSection = document.querySelector("#highscores");
 var highscroesTable = document.querySelector("#highscoresTable");
 var highscoresArray = [];
 
@@ -170,6 +177,12 @@ var userInitials = document.querySelector("#initialsInput");
 
 document.querySelector("#initials-submit-form").addEventListener("submit", function (event) {
     event.preventDefault();
+
+    if (userInitials.value.length > 3) {
+        alert("Too long!\nPlease enter 1-3 Characters to submit your highscore!");
+        userInitials.value = "";
+        return
+    }
 
     var playerData = {
         user: userInitials.value,
@@ -182,6 +195,8 @@ document.querySelector("#initials-submit-form").addEventListener("submit", funct
     var toString = "Name: " + playerData.user + " | Score: " + playerData.score;
     console.log(toString);
 
+    highscoresSection.setAttribute("style", "display: block;");
+    finalScoreSection.setAttribute("style", "display: none;");
     addHighScores();
 })
 
@@ -196,13 +211,11 @@ function addHighScores() {
 
 var conuntdown = document.querySelector("#countdown");
 var finalScoreAlert = document.querySelector("#final-score-alert");
-
 countdown.textContent = secondsLeft;
-
-function setTime (){
-    secondsLeft = 5;
-    var timeInterval = setInterval(function(){
-        secondsLeft --;
+function setTime() {
+    // Removing the var variable which allows us to clear the interval globally
+    timeInterval = setInterval(function () {
+        secondsLeft--;
         countdown.textContent = secondsLeft;
 
         if (qIndex === returnQuestions().length) {
@@ -211,13 +224,40 @@ function setTime (){
             clearInterval(timeInterval);
             showResults();
             return
-        }     
+        }
+
 
         if (secondsLeft === 0) {
             clearInterval(timeInterval);
             finalScoreAlert.innerHTML = "Times up! Your final score:";
             showResults();
         }
-    },1000)
+    }, 1000)
 }
 
+var viewHS = document.querySelector("#viewHS");
+viewHS.addEventListener("click", showHighScores);
+function showHighScores() {
+    intro.setAttribute("style", "display: none;");
+    questionSection.setAttribute("style", "display: none;");
+    finalScoreSection.setAttribute("style", "display: none;");
+    highscoresSection.setAttribute("style", "display: block;");
+    clearInterval(timeInterval);
+}
+
+var clearHS = document.querySelector("#clearHS");
+clearHS.addEventListener("click", function () {
+    console.log("clear HS was clicked!");
+    highscoresArray = [];
+    highscroesTable.innerHTML = "";
+});
+
+
+var returnHome = document.querySelector("#home");
+returnHome.addEventListener("click", function () {
+    intro.setAttribute("style", "display: block;");
+    questionSection.setAttribute("style", "display: none;");
+    finalScoreSection.setAttribute("style", "display: none;");
+    highscoresSection.setAttribute("style", "display: none;");
+    reset();
+})
