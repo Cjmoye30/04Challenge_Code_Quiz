@@ -60,7 +60,16 @@
 
         - Timeout Function
             > Create a timer which ticks down by 1 second at a time and the inner html is updated
-            > If the timer reaches 0 and the quiz is not completed, then an alert is announced and the user is automatically taken 
+            > If the timer reaches 0 and the quiz is not completed, then an alert is announced and the user is automatically taken.
+
+        - Left to do:
+            > Have a button which returns to the home page without resetting anything so that you can keep the high scores in tact - this way if the user wants to view the instructions about how this operates then they can do that.
+            > Have the input field for the initials dissapear after high scores submission so there is not duplicate value entered
+            > If the value of the initials entered already matches something already entered, then throw an error and have the user re-enter their initials or name
+            > Style for screen sizes.
+            > Reduce timeout function so that there is a smaller chance of spam clicking and breaking the quiz.
+            > Add in question numbers which are pulling from the qIndex + 1
+            > Add in more questions and have them related to actual coding topics
     -->
 
     <header>
@@ -121,6 +130,8 @@
             <div class="closing-buttons">
                 <button id="restart" class="btn">Try Again</button>
                 <button id="clearHS" class="btn">Clear Highscores</button>
+                <button id="home" class="btn">Home Page</button>
+                
             </div>
         </section>
 
