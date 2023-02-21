@@ -81,17 +81,17 @@
         <!-- I could have this entire section disappear when the button is clicked, so that I do not have to worry about altering the contents of it too much when I start the actual quiz -->
         <section id="intro">
             <h1 id="intro-header" class="section-header">Coding Quiz Challenge!</h1>
-            <p class="intro-description">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eligendi voluptatem,
-                corporis similique culpa enim deserunt nisi fugiat necessitatibus odio amet modi quia consectetur,
-                voluptas reiciendis nihil doloribus illo omnis cupiditate labore soluta asperiores doloremque quibusdam,
-                iure aliquam? Aliquam, nobis nam!</p>
-            <p class="intro-description">You will be moved to the next question as soon as you click on an answer, so be
-                sure to choose carefully! (aka you will break my website!)</p>
+            <p class="intro-description">You will be asked a series of 10 questions which are going to increase in complexity to test your competence (or incompetence) as an alleged Web Developer.</p><hr>
+            <p class="intro-description">Once you click the button below, you will immediately be taken to the first question - and a <span>1 minute timer will begin</span>.</p><hr>
+            <p class="intro-description">If you get a question wrong, then 10 seconds will be taken off of the total timer.</p><hr>
+            <p class="intro-description">Once you click an answer choice - that is it! You will immediately be moved to the next question for the sake of <span>Speed and Momentum</span>.</p><hr>
+            <p class="intro-description">GOOD LUCK!</p>
             <button id="start-button" class="btn">Start Quiz!</button>
         </section>
 
         <!-- Section which will show the questions and progress through until the last question -->
         <section id="quiz-content">
+            <p id="questionNum"></p>
             <h1 id="question" class="section-header">Question Placeholder</h1>
             <div class="answer-group">
                 <div class="answer-choices a">A:</div>
@@ -108,11 +108,10 @@
             <p id="final-score-number"></p>
 
             <div class="initials-section">
-                <p>Enter Initials:</p>
-
                 <form id="initials-submit-form">
-                    <input id="initialsInput" type="text" placeholder="Enter Initials">
-                    <button id="initials-submit-btn" type="submit" class="btn">Submit</button>
+                    <p class = "formEl">Enter 3 Letter Initials:</p>
+                    <input id="initialsInput" type="text" placeholder="" class = "formEl">
+                    <button id="initials-submit-btn" type="submit" class="btn formEl">Submit</button>
                 </form>
             </div>
         </section>
