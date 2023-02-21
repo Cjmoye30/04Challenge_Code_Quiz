@@ -119,7 +119,7 @@ function answerCheck() {
         currentQResult.setAttribute("style", "background-color: #CFFF8D; padding: 20px; border-radius: 10px");
         setTimeout(function () {
             runQuiz();
-        }, 500);
+        }, 250);
     } else {
         console.log("incorrect!");
         secondsLeft -= 10;
@@ -129,7 +129,7 @@ function answerCheck() {
         currentQResult.setAttribute("style", "background-color: #F0997D; padding: 20px; border-radius: 10px");
         setTimeout(function () {
             runQuiz();
-        }, 500);
+        }, 250);
     }
 }
 
@@ -166,6 +166,7 @@ function reset() {
     qIndex = 0;
     secondsLeft = 60;
     console.log("Current Question: " + qIndex + "\nTotal Correct: " + totalCorrect + "\nTotal Wrong: " + totalWrong);
+    userInitials.value = "";
     finalScoreAlert.innerHTML = "";
 }
 
@@ -178,10 +179,18 @@ var userInitials = document.querySelector("#initialsInput");
 document.querySelector("#initials-submit-form").addEventListener("submit", function (event) {
     event.preventDefault();
 
-    if (userInitials.value.length > 3) {
-        alert("Too long!\nPlease enter 1-3 Characters to submit your highscore!");
+    if (userInitials.value.length > 3 || userInitials.value.length === 0) {
+        alert("Invalid!\nPlease enter 1-3 characters to submit your score!");
         userInitials.value = "";
         return
+    }
+
+    for (var i = 0; i < highscoresArray.length; i++){
+        if(highscoresArray[i].user === userInitials.value) {
+            alert("Those initials are already taken. Please enter something else.");
+            userInitials.value = "";
+            return
+        }
     }
 
     var playerData = {
@@ -252,12 +261,11 @@ clearHS.addEventListener("click", function () {
     highscroesTable.innerHTML = "";
 });
 
-
 var returnHome = document.querySelector("#home");
 returnHome.addEventListener("click", function () {
+    reset();
     intro.setAttribute("style", "display: block;");
     questionSection.setAttribute("style", "display: none;");
     finalScoreSection.setAttribute("style", "display: none;");
     highscoresSection.setAttribute("style", "display: none;");
-    reset();
 })
