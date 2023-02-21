@@ -4,23 +4,20 @@ var intro = document.querySelector("#intro");
 var questionSection = document.querySelector("#quiz-content");
 var finalScoreSection = document.querySelector("#final-score");
 var finalScoreText = document.querySelector("#final-score-number");
-
 var currentQ = document.querySelector("#question");
 var answerOptions = document.querySelectorAll(".answer-choices");
 var currentQResult = document.querySelector(".question-result");
+var questionNum = document.querySelector("#questionNum");
 
+// All Counters
 var totalCorrect = 0;
 var totalWrong = 0;
 var qIndex = 0;
 var totalQuestions = returnQuestions().length;
 var finalScore = 0;
-
 var secondsLeft = 60;
 
-
 // Event Listeners
-// Starting the quiz - I can put this in another function called execute whic
-// Store this in a function called init and then call init when you restart the quiz!
 startBtn.addEventListener("click", function () {
     removeIntro();
     returnQuestions();
@@ -43,43 +40,121 @@ function removeIntro() {
     questionSection.setAttribute("style", "display: block;");
 }
 
+
 // Question Bank
 function returnQuestions() {
 
     var q1 = {
-        question: "What color is my underwear?",
+        question: "What syntax is used to  add an element to the end of an array?",
         answers: {
-            0: "A: Red",
-            1: "B: Blue",
-            2: "C: Green",
-            3: "D: Potato"
+            0: "A: .pull()",
+            1: "B: .hit()",
+            2: "C: .add()",
+            3: "D: .push()"
         },
         correctAnswer: 'd'
     }
 
     var q2 = {
-        question: "Who do you think you are?",
+        question: "Javascript is a _____ language.",
         answers: {
-            0: "A: Excuse me?",
-            1: "B: I am Cambric",
-            2: "C: A tame salmon",
-            3: "D: 2+2=5"
+            0: "A: Skyrim",
+            1: "B: Object-Oriented Programming",
+            2: "C: Coding",
+            3: "D: None of the above"
         },
         correctAnswer: 'b'
     }
 
     var q3 = {
-        question: "What gives you the right?",
+        question: "Which HTML semantic tag is commonly used to store main componenets on a webpage?",
         answers: {
-            0: "A: My entire existence",
-            1: "B: null",
-            2: "C: Shovel!",
-            3: "D: I give up"
+            0: "A: section",
+            1: "B: container",
+            2: "C: shovel",
+            3: "D: div"
         },
         correctAnswer: 'a'
     }
 
-    var qArray = [q1, q2, q3];
+    var q4 = {
+        question: "What is the maximum number of classes you can add to an HTML element?",
+        answers: {
+            0: "A: 10",
+            1: "B: To infinity and beyond - there is no limit",
+            2: "C: 128",
+            3: "D: 3.14"
+        },
+        correctAnswer: 'b'
+    }
+
+    var q5 = {
+        question: "Which of the following is the best description of Computational Thinking?",
+        answers: {
+            0: "A: Absolute nonsense",
+            1: "B: A step-by-step process used to break down complex problems into more manageable tasks.",
+            2: "C: Still nonsense",
+            3: "D: A skill in The Thief category from Elder Scrolls: Skyrim"
+        },
+        correctAnswer: 'b'
+    }
+
+    var q6 = {
+        question: "What does CSS stand for?",
+        answers: {
+            0: "A: Cascading Style Sheets",
+            1: "B: Cambric Stays Scheming",
+            2: "C: Color and Style Sheets",
+            3: "D: None of the above"
+        },
+        correctAnswer: 'a'
+    }
+
+    var q7 = {
+        question: "Which of the following is used to fit an image or video into a container with an established height and width?",
+        answers: {
+            0: "A: brute-force",
+            1: "B: object-position",
+            2: "C: position",
+            3: "D: object-fit"
+        },
+        correctAnswer: 'd'
+    }
+
+    var q8 = {
+        question: "What is used to add a line to the outside of an HTML element?",
+        answers: {
+            0: "A: border",
+            1: "B: line",
+            2: "C: draw",
+            3: "D: margin"
+        },
+        correctAnswer: 'a'
+    }
+
+    var q9 = {
+        question: "Which of the following is not an HTML semantic tag?",
+        answers: {
+            0: "A: Click me!",
+            1: "B: header",
+            2: "C: footer",
+            3: "D: section"
+        },
+        correctAnswer: 'a'
+    }
+
+    var q10 = {
+        question: "Which of the follwing is considered Strict Equality?",
+        answers: {
+            0: "A: =!=",
+            1: "B: ==",
+            2: "C: =",
+            3: "D: ==="
+        },
+        correctAnswer: 'd'
+    }
+
+    var qArray = [q1, q2, q3, q4, q5, q6, q7, q8, q9, q10];
     return qArray;
 }
 
@@ -99,8 +174,9 @@ function runQuiz() {
         return
         // Have to keep an empty return otherwise the function will complete until the very end and throw an error
     }
-
+    
     currentQ.innerHTML = returnQuestions()[qIndex].question;
+    questionNum.innerHTML = "Question: " + (qIndex+1) + " out of " +totalQuestions;
 
     for (var j = 0; j < answerOptions.length; j++) {
         answerOptions[j].innerHTML = returnQuestions()[qIndex].answers[j];
