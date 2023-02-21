@@ -29,7 +29,6 @@ var userAnswer;
 for (var i = 0; i < answerOptions.length; i++) {
     answerOptions[i].addEventListener("click", function (e) {
         userAnswer = e.target.classList[1];
-        console.log(userAnswer);
         answerCheck();
     })
 }
@@ -39,7 +38,6 @@ function removeIntro() {
     intro.setAttribute("style", "display: none;");
     questionSection.setAttribute("style", "display: block;");
 }
-
 
 // Question Bank
 function returnQuestions() {
@@ -159,20 +157,14 @@ function returnQuestions() {
 }
 
 // Function which is changing the inner HTML for the user upon answering the question
-// Stops when we reach the last question
-// Also need to stop when the timer reaches a certain point.
 function runQuiz() {
-
-    // Removing the result from the previous question before showing the next
     resultReset();
 
-    // Stop running the quiz once we hit the last question and proceed to the next step
     if (qIndex === returnQuestions().length) {
         questionSection.setAttribute("style", "display: none;");
         finalScoreAlert.innerHTML = "All Done!";
         showResults();
         return
-        // Have to keep an empty return otherwise the function will complete until the very end and throw an error
     }
     
     currentQ.innerHTML = returnQuestions()[qIndex].question;
@@ -183,12 +175,10 @@ function runQuiz() {
     }
 }
 
-// Add a 1-1.5 second delay before showing the next question
 function answerCheck() {
     var correct = returnQuestions()[qIndex].correctAnswer;
 
     if (userAnswer === correct) {
-        console.log("Correct!");
         qIndex++;
         totalCorrect++;
         currentQResult.innerHTML = "Correct!!";
@@ -197,7 +187,6 @@ function answerCheck() {
             runQuiz();
         }, 250);
     } else {
-        console.log("incorrect!");
         secondsLeft -= 10;
         qIndex++;
         totalWrong++;
@@ -241,7 +230,6 @@ function reset() {
     totalWrong = 0;
     qIndex = 0;
     secondsLeft = 60;
-    console.log("Current Question: " + qIndex + "\nTotal Correct: " + totalCorrect + "\nTotal Wrong: " + totalWrong);
     userInitials.value = "";
     finalScoreAlert.innerHTML = "";
 }
@@ -275,10 +263,8 @@ document.querySelector("#initials-submit-form").addEventListener("submit", funct
     }
 
     highscoresArray.push(playerData);
-    console.log(highscoresArray.length);
 
     var toString = "Name: " + playerData.user + " | Score: " + playerData.score;
-    console.log(toString);
 
     highscoresSection.setAttribute("style", "display: block;");
     finalScoreSection.setAttribute("style", "display: none;");
@@ -332,7 +318,6 @@ function showHighScores() {
 
 var clearHS = document.querySelector("#clearHS");
 clearHS.addEventListener("click", function () {
-    console.log("clear HS was clicked!");
     highscoresArray = [];
     highscroesTable.innerHTML = "";
 });
