@@ -3,8 +3,8 @@
 ## Description
 
 - What was your motivation?
-    - My motivation for this project was to come up with a simple interactive quiz which mimics other multiple choice quizzes I've taken in my life.
-    - The acceptance and grading criteria are simple - creating a multiple choice quiz which progresses through questions, tracks the users score, and then logs that score into a highscores table.
+    - My motivation for this project was to come up with a simple interactive quiz that mimics other multiple-choice quizzes I've taken in my life.
+    - The acceptance and grading criteria are simple - creating a multiple choice quiz that progresses through questions, tracks the user's score, and then logs that score into a highscores table.
 
 - Why did you build this project?
     - I build this project to continue to build my skills using JavaScript. Before delving fully into JQuery and other APIs/Libraries, it is essential to learn the basics of "Vanilla JavaScript".
@@ -24,12 +24,19 @@
         - Gained a better understanding of setTimeout functions - the delay of 250ms is enough to show the result of the current question and quick enough to proceed to the next question.
         - Append child is very easy - just need to locate the div or HTML element that you want to append to.
         - Time Interval as a global variable - by removing the var keyword from the setTime() function, you are able to clear the interval from anywhere in the JS file rather than only locally within the function.
-        
 
+## Installation / Live Site
 
+[Github Pages Live Site](https://cjmoye30.github.io/04Challenge_Code_Quiz/)
 
+## Usage / Screenshots
 
+![Question Example](assets/images/Coding%20Quiz-Main.png)
+![Question Example](assets/images/Coding%20Quiz1%20.png)
+![Question Example](assets/images/Coding%20Quiz3.png)
+![Question Example](assets/images/Coding%20Quiz4.png)
 
-### Resources
+### Resources / Credits
 [Example Question Bank](https://www.sanfoundry.com/1000-javascript-questions-answers/)
+
 [Example Question Bank](https://www.javatpoint.com/css-mcq)

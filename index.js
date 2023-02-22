@@ -1,23 +1,42 @@
-// All Document Selectors
+// ---------- All Document Selectors Grouped by HTML Section ----------
+// Intro Section Document Selectors
 var startBtn = document.querySelector("#start-button");
 var intro = document.querySelector("#intro");
+var conuntdown = document.querySelector("#countdown");
+var viewHS = document.querySelector("#viewHS");
+
+// Quiz Section Document Selectors
 var questionSection = document.querySelector("#quiz-content");
-var finalScoreSection = document.querySelector("#final-score");
-var finalScoreText = document.querySelector("#final-score-number");
 var currentQ = document.querySelector("#question");
 var answerOptions = document.querySelectorAll(".answer-choices");
 var currentQResult = document.querySelector(".question-result");
 var questionNum = document.querySelector("#questionNum");
 
-// All Counters
+// Final Score Section Document Selectors
+var finalScoreSection = document.querySelector("#final-score");
+var finalScoreText = document.querySelector("#final-score-number");
+var userInitials = document.querySelector("#initialsInput");
+var finalScoreAlert = document.querySelector("#final-score-alert");
+
+// Highscores Section Document Selectors
+var restart = document.querySelector("#restart");
+var highscoresSection = document.querySelector("#highscores");
+var highscroesTable = document.querySelector("#highscoresTable");
+var clearHS = document.querySelector("#clearHS");
+var returnHome = document.querySelector("#home");
+
+// ---------- All Counters ----------
+var highscoresArray = [];
 var totalCorrect = 0;
 var totalWrong = 0;
 var qIndex = 0;
 var totalQuestions = returnQuestions().length;
 var finalScore = 0;
 var secondsLeft = 60;
+var userAnswer;
+countdown.textContent = secondsLeft;
 
-// Event Listeners
+// ---------- Event Listeners ----------
 startBtn.addEventListener("click", function () {
     removeIntro();
     returnQuestions();
@@ -25,7 +44,64 @@ startBtn.addEventListener("click", function () {
     runQuiz();
 });
 
-var userAnswer;
+restart.addEventListener("click", function () {
+    reset();
+
+    questionSection.setAttribute("style", "display: block;");
+    highscoresSection.setAttribute("style", "display: none;");
+    finalScoreSection.setAttribute("style", "display: none;");
+
+    returnQuestions();
+    setTime();
+    runQuiz();
+})
+
+clearHS.addEventListener("click", function () {
+    highscoresArray = [];
+    highscroesTable.innerHTML = "";
+});
+
+returnHome.addEventListener("click", function () {
+    reset();
+    intro.setAttribute("style", "display: block;");
+    questionSection.setAttribute("style", "display: none;");
+    finalScoreSection.setAttribute("style", "display: none;");
+    highscoresSection.setAttribute("style", "display: none;");
+})
+
+document.querySelector("#initials-submit-form").addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    if (userInitials.value.length > 3 || userInitials.value.length === 0) {
+        alert("Invalid!\nPlease enter 1-3 characters to submit your score!");
+        userInitials.value = "";
+        return
+    }
+
+    for (var i = 0; i < highscoresArray.length; i++) {
+        if (highscoresArray[i].user === userInitials.value) {
+            alert("Those initials are already taken. Please enter something else.");
+            userInitials.value = "";
+            return
+        }
+    }
+
+    var playerData = {
+        user: userInitials.value,
+        score: finalScore
+    }
+
+    highscoresArray.push(playerData);
+
+    var toString = "Name: " + playerData.user + " | Score: " + playerData.score;
+
+    highscoresSection.setAttribute("style", "display: block;");
+    finalScoreSection.setAttribute("style", "display: none;");
+    addHighScores();
+})
+
+viewHS.addEventListener("click", showHighScores);
+
 for (var i = 0; i < answerOptions.length; i++) {
     answerOptions[i].addEventListener("click", function (e) {
         userAnswer = e.target.classList[1];
@@ -33,12 +109,13 @@ for (var i = 0; i < answerOptions.length; i++) {
     })
 }
 
-// Remove the intro section when clicked and show the quiz content section
+// ---------- All Functions ----------
+
+// Introduction > Quiz
 function removeIntro() {
     intro.setAttribute("style", "display: none;");
     questionSection.setAttribute("style", "display: block;");
 }
-
 // Question Bank
 function returnQuestions() {
 
@@ -155,8 +232,7 @@ function returnQuestions() {
     var qArray = [q1, q2, q3, q4, q5, q6, q7, q8, q9, q10];
     return qArray;
 }
-
-// Function which is changing the inner HTML for the user upon answering the question
+// Run the Quiz - displaying the correct q/a pair based on the question index
 function runQuiz() {
     resultReset();
 
@@ -166,15 +242,15 @@ function runQuiz() {
         showResults();
         return
     }
-    
+
     currentQ.innerHTML = returnQuestions()[qIndex].question;
-    questionNum.innerHTML = "Question: " + (qIndex+1) + " out of " +totalQuestions;
+    questionNum.innerHTML = "Question: " + (qIndex + 1) + " out of " + totalQuestions;
 
     for (var j = 0; j < answerOptions.length; j++) {
         answerOptions[j].innerHTML = returnQuestions()[qIndex].answers[j];
     }
 }
-
+// Updating counters based on user clicks
 function answerCheck() {
     var correct = returnQuestions()[qIndex].correctAnswer;
 
@@ -197,12 +273,12 @@ function answerCheck() {
         }, 250);
     }
 }
-
+// Remove attributes manually after proceeding to the next question rather than using a delay
 function resultReset() {
     currentQResult.innerHTML = "";
     currentQResult.removeAttribute("style");
 }
-
+// Show user the results of the quiz
 function showResults() {
     questionSection.setAttribute("style", "display: none;");
     finalScoreSection.setAttribute("style", "display: block;");
@@ -211,20 +287,7 @@ function showResults() {
     countdown.textContent = 0;
     finalScoreText.innerHTML = "Your final score was: " + finalScore + "%!";
 }
-
-var restart = document.querySelector("#restart");
-restart.addEventListener("click", function () {
-    reset();
-
-    questionSection.setAttribute("style", "display: block;");
-    highscoresSection.setAttribute("style", "display: none;");
-    finalScoreSection.setAttribute("style", "display: none;");
-
-    returnQuestions();
-    setTime();
-    runQuiz();
-})
-
+// Resetting all variables to start the quiz again
 function reset() {
     totalCorrect = 0;
     totalWrong = 0;
@@ -233,58 +296,18 @@ function reset() {
     userInitials.value = "";
     finalScoreAlert.innerHTML = "";
 }
-
-var highscoresSection = document.querySelector("#highscores");
-var highscroesTable = document.querySelector("#highscoresTable");
-var highscoresArray = [];
-
-var userInitials = document.querySelector("#initialsInput");
-
-document.querySelector("#initials-submit-form").addEventListener("submit", function (event) {
-    event.preventDefault();
-
-    if (userInitials.value.length > 3 || userInitials.value.length === 0) {
-        alert("Invalid!\nPlease enter 1-3 characters to submit your score!");
-        userInitials.value = "";
-        return
-    }
-
-    for (var i = 0; i < highscoresArray.length; i++){
-        if(highscoresArray[i].user === userInitials.value) {
-            alert("Those initials are already taken. Please enter something else.");
-            userInitials.value = "";
-            return
-        }
-    }
-
-    var playerData = {
-        user: userInitials.value,
-        score: finalScore
-    }
-
-    highscoresArray.push(playerData);
-
-    var toString = "Name: " + playerData.user + " | Score: " + playerData.score;
-
-    highscoresSection.setAttribute("style", "display: block;");
-    finalScoreSection.setAttribute("style", "display: none;");
-    addHighScores();
-})
-
+// Appending highscores to the unordered list in the HTML
 function addHighScores() {
     highscroesTable.innerHTML = "";
+
     for (var i = 0; i < highscoresArray.length; i++) {
         var li = document.createElement("li");
         li.textContent = highscoresArray[i].user + " | " + highscoresArray[i].score;
         highscroesTable.appendChild(li);
     }
 }
-
-var conuntdown = document.querySelector("#countdown");
-var finalScoreAlert = document.querySelector("#final-score-alert");
-countdown.textContent = secondsLeft;
+// Timer for the quiz - cleared at 0 or less than 0 (if a question is answered wrong with less than 10 seconds left)
 function setTime() {
-    // Removing the var variable which allows us to clear the interval globally
     timeInterval = setInterval(function () {
         secondsLeft--;
         countdown.textContent = secondsLeft;
@@ -297,36 +320,19 @@ function setTime() {
             return
         }
 
-
-        if (secondsLeft === 0) {
+        if (secondsLeft === 0 || secondsLeft <= 0) {
             clearInterval(timeInterval);
             finalScoreAlert.innerHTML = "Times up! Your final score:";
             showResults();
         }
     }, 1000)
 }
-
-var viewHS = document.querySelector("#viewHS");
-viewHS.addEventListener("click", showHighScores);
+// Hide all sections but highscores table
 function showHighScores() {
     intro.setAttribute("style", "display: none;");
     questionSection.setAttribute("style", "display: none;");
     finalScoreSection.setAttribute("style", "display: none;");
     highscoresSection.setAttribute("style", "display: block;");
+    countdown.textContent = 0;
     clearInterval(timeInterval);
 }
-
-var clearHS = document.querySelector("#clearHS");
-clearHS.addEventListener("click", function () {
-    highscoresArray = [];
-    highscroesTable.innerHTML = "";
-});
-
-var returnHome = document.querySelector("#home");
-returnHome.addEventListener("click", function () {
-    reset();
-    intro.setAttribute("style", "display: block;");
-    questionSection.setAttribute("style", "display: none;");
-    finalScoreSection.setAttribute("style", "display: none;");
-    highscoresSection.setAttribute("style", "display: none;");
-})
